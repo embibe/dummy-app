@@ -53,65 +53,9 @@ set :puma_workers, 0
 # set :keep_releases, 5
 
 
-namespace :foreman do
-  namespace :eye do
-    task :export do
-      on roles(:app) do
-        within current_path do
-          execute :bundle, "exec foreman export bluepill -c flush_queue=4,node=1 -a stats  -l #{current_path} -u deploy -r #{shared_path}/tmp/pids -t config/config.eye.erb #{shared_path}/eye"
-        end
-      end
-    end
-
-    task :restart do
-      invoke 'foreman:eye:export'
-      invoke 'foreman:eye:quit'
-      invoke 'foreman:eye:start'
-    end
-
-    task :start do
-      on roles(:app) do
-        within current_path do
-          execute :bundle, "exec eye load #{shared_path}/eye/stats.pill"
-          execute :bundle, "exec eye start queues"
-        end
-      end
-
-    end
-
-    task :stop do
-      on roles(:app) do
-        within current_path do
-          execute :bundle, "exec eye stop queues"
-        end
-      end
-    end
-
-    task :quit do
-      on roles(:app) do
-        within current_path do
-          execute :bundle, "exec eye stop queues"
-          execute :bundle, "exec eye quit"
-        end
-      end
-    end
-
-
-  end
-end
 
 
 namespace :deploy do
-
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app) do
-      within current_path do
-        execute "npm install"
-      end
-    end
-  end
 
 
   after :finishing, 'deploy:cleanup'
