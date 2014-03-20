@@ -1,4 +1,6 @@
 Wasted::Application.routes.draw do
+  resources :entries
+
   devise_for :users
   get "home/page"
   # The priority is based upon order of creation: first created -> highest priority.
