@@ -49,7 +49,7 @@ end
 group :development do
   gem 'capistrano', "~> 3.1"
   gem 'capistrano-rails'
-  gem 'capistrano-rbenv', github: 'capistrano/rbenv'
+  gem 'capistrano-rbenv', git: "https://github.com/capistrano/rbenv.git"
   gem 'capistrano-bundler'
-  gem 'capistrano-puma', github: "seuros/capistrano-puma"
+  gem 'capistrano-puma', git: "https://github.com/seuros/capistrano-puma.git"
 end
